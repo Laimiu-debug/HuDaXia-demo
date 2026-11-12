@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b1113" />
+  <meta name="description" content="从前过关隘，今夜守道闸。听雨苑夜班门岗短篇。" />
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta property="og:title" content="胡大侠" />
+  <meta property="og:description" content="从前过关隘，今夜守道闸。听雨苑夜班门岗短篇。" />
+  <title>胡大侠 · 听雨苑门岗</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <noscript><p style="padding:2rem;color:#f4ead4;max-width:430px;margin:0 auto;font-family:sans-serif;">请打开浏览器的脚本功能后再进听雨苑门岗。</p></noscript>
+  <div id="app">
+    <div class="grain" aria-hidden="true"></div>
+
+    <header id="hud" class="hud hidden" hidden>
+      <div class="hud-top">
+        <div class="hud-place">
+          <span class="seal-mini">守</span>
+          <div>
+            <p class="hud-kicker">听雨苑 · 夜班门岗</p>
+            <p id="hud-time" class="hud-time">二十点整</p>
+          </div>
+        </div>
+        <button type="button" id="btn-roster" class="btn-roster">住户名册</button>
+      </div>
+      <ul id="stats" class="stats" aria-label="状态"></ul>
+    </header>
+
+    <div id="scene-wrap" class="scene-wrap hidden" hidden>
+      <svg id="scene" class="scene" viewBox="0 0 360 280" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#0b1316"/>
+            <stop offset="55%" stop-color="#152226"/>
+            <stop offset="100%" stop-color="#1b2a28"/>
+          </linearGradient>
+          <radialGradient id="moonGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%" stop-color="#f0e2b8" stop-opacity="0.55"/>
+            <stop offset="55%" stop-color="#f0e2b8" stop-opacity="0.08"/>
+            <stop offset="100%" stop-color="#f0e2b8" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="lampGlow" cx="50%" cy="40%" r="50%">
+            <stop offset="0%" stop-color="#f3d78a" stop-opacity="0.55"/>
+            <stop offset="40%" stop-color="#f3d78a" stop-opacity="0.16"/>
+            <stop offset="100%" stop-color="#f3d78a" stop-opacity="0"/>
+          </radialGradient>
+          <clipPath id="boothWin"><rect x="286" y="168" width="38" height="28" rx="1.5"/></clipPath>
+        </defs>
+
+        <rect width="360" height="280" fill="url(#sky)"/>
+        <circle class="moon-halo" cx="286" cy="46" r="42" fill="url(#moonGlow)"/>
+        <circle class="moon" cx="286" cy="46" r="18" fill="#e8d9b0" fill-opacity="0.85"/>
+        <circle cx="278" cy="42" r="18" fill="#152226" fill-opacity="0.28"/>
+
+        <!-- distant buildings -->
+        <g fill="#0d1517" class="skyline">
+          <rect x="8" y="86" width="52" height="110"/>
+          <rect x="62" y="70" width="44" height="126"/>
+          <rect x="108" y="92" width="58" height="104"/>
+          <rect x="200" y="78" width="48" height="118"/>
+          <rect x="248" y="64" width="40" height="132"/>
+          <rect x="318" y="84" width="42" height="112"/>
+          <polygon points="8,86 34,74 60,86" fill="#0d1517"/>
+          <polygon points="248,64 268,52 288,64" fill="#0d1517"/>
+        </g>
+        <!-- lit windows -->
+        <g class="windows" fill="#e8c56a">
+          <rect class="w1" x="18" y="102" width="5" height="7" opacity="0.75"/>
+          <rect class="w2" x="28" y="118" width="5" height="7" opacity="0.35"/>
+          <rect class="w3" x="74" y="90" width="5" height="7" opacity="0.8"/>
+          <rect class="w4" x="86" y="112" width="5" height="7" opacity="0.25"/>
+          <rect class="w5" x="118" y="108" width="5" height="7" opacity="0.7"/>
+          <rect class="w6" x="214" y="96" width="5" height="7" opacity="0.55"/>
+          <rect class="w7" x="258" y="88" width="5" height="7" opacity="0.8"/>
+          <rect class="w8" x="270" y="110" width="5" height="7" opacity="0.3"/>
+          <rect class="w9" x="328" y="100" width="5" height="7" opacity="0.65"/>
+        </g>
+
+        <!-- wall -->
+        <rect x="0" y="188" width="360" height="92" fill="#121a1b"/>
+        <rect x="0" y="188" width="360" height="8" fill="#1c2a28"/>
+        <g fill="#0f1718" opacity="0.45">
+          <rect x="20" y="206" width="26" height="16"/>
+          <rect x="70" y="206" width="26" height="16"/>
+          <rect x="200" y="206" width="26" height="16"/>
+          <rect x="248" y="206" width="26" height="16"/>
+        </g>
+
+        <!-- ink trees -->
+        <g fill="#0a1011" opacity="0.9">
+          <ellipse cx="36" cy="186" rx="22" ry="28"/>
+          <ellipse cx="52" cy="190" rx="14" ry="20"/>
+          <ellipse cx="230" cy="184" rx="18" ry="24"/>
+        </g>
+
+        <!-- lamp post + glow -->
+        <ellipse cx="132" cy="200" rx="70" ry="46" fill="url(#lampGlow)"/>
+        <g id="lamp">
+          <rect x="129" y="108" width="4" height="92" fill="#2a2420"/>
+          <path d="M118 108 h26 l-3 12 h-20 z" fill="#c9a14a"/>
+          <rect x="121" y="118" width="16" height="6" fill="#f3d78a" class="lamp-bulb"/>
+        </g>
+
+        <!-- barrier -->
+        <g id="barrier">
+          <rect x="168" y="196" width="8" height="28" fill="#2b3330"/>
+          <rect id="barrier-arm" x="176" y="200" width="86" height="6" fill="#a63d2f"/>
+          <rect x="176" y="200" width="10" height="6" fill="#e8d8b8"/>
+          <rect x="196" y="200" width="10" height="6" fill="#e8d8b8"/>
+          <rect x="216" y="200" width="10" height="6" fill="#e8d8b8"/>
+        </g>
+
+        <!-- visitor slot -->
+        <g id="visitor-slot" transform="translate(96,148)"></g>
+
+        <!-- booth -->
+        <g id="booth">
+          <rect x="268" y="148" width="78" height="80" fill="#1c2422"/>
+          <rect x="268" y="142" width="78" height="10" fill="#2a3330"/>
+          <polygon points="264,142 307,128 350,142" fill="#24302e"/>
+          <rect x="286" y="168" width="38" height="28" fill="#3a2a16"/>
+          <rect x="286" y="168" width="38" height="28" fill="#e8b85a" opacity="0.35"/>
+          <g clip-path="url(#boothWin)">
+            <path d="M300 196 v-18 h10 v8 h8 v10 z" fill="#16120e" opacity="0.85"/>
+            <circle cx="305" cy="176" r="3.2" fill="#16120e" opacity="0.9"/>
+          </g>
+          <rect x="286" y="168" width="38" height="28" fill="none" stroke="#c9a14a" stroke-width="1.2"/>
+          <text x="276" y="162" fill="#e8d8b8" font-size="7" font-family="serif">听雨苑</text>
+          <rect x="274" y="204" width="10" height="16" fill="#121818"/>
+          <!-- thermos on sill -->
+          <rect x="322" y="198" width="6" height="10" fill="#a63d2f"/>
+          <rect x="323" y="196" width="4" height="3" fill="#e8d8b8"/>
+        </g>
+
+        <!-- ground grain line -->
+        <path d="M0 248 Q180 236 360 250" stroke="#0a1011" stroke-width="8" fill="none" opacity="0.5"/>
+        <text id="visitor-caption" x="132" y="272" text-anchor="middle" fill="#cbb896" font-size="8" font-family="sans-serif"></text>
+      </svg>
+      <p id="scene-caption" class="scene-caption"></p>
+    </div>
+
+    <main id="panel" class="panel">
+      <!-- filled by JS -->
+    </main>
+  </div>
+
+  <div id="roster" class="roster hidden" hidden role="dialog" aria-modal="true" aria-labelledby="roster-title">
+    <div class="roster-sheet">
+      <header class="roster-head">
+        <div>
+          <p class="hud-kicker">听雨苑物业 · 内部</p>
+          <h2 id="roster-title">住户名册</h2>
+        </div>
+        <button type="button" id="btn-roster-close" class="btn-close">合上</button>
+      </header>
+      <div id="roster-notes" class="roster-notes"></div>
+      <div id="roster-body" class="roster-body"></div>
+    </div>
+  </div>
+
+  <script src="js/data.js"></script>
+  <script src="js/game.js"></script>
+</body>
+</html>

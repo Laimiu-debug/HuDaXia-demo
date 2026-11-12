@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect width="64" height="64" fill="#0b1113"/>
+  <rect x="10" y="10" width="44" height="44" fill="none" stroke="#b03a2e" stroke-width="3"/>
+  <rect x="14" y="14" width="36" height="36" fill="none" stroke="#b03a2e" stroke-width="1"/>
+  <text x="32" y="44" text-anchor="middle" font-size="28" font-family="Songti SC, STSong, serif" fill="#b03a2e">胡</text>
+</svg>
