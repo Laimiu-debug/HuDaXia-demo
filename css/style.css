@@ -70,6 +70,11 @@ a:focus-visible {
   margin: 0 auto;
   min-height: 100dvh;
   min-height: 100svh;
+  height: 100dvh;
+  height: 100svh;
+  max-height: 100dvh;
+  max-height: 100svh;
+  overflow: hidden;
   background:
     radial-gradient(120% 60% at 80% -10%, rgba(240, 207, 122, 0.08), transparent 50%),
     linear-gradient(180deg, #0b1113 0%, #10181a 40%, #0e1614 100%);
@@ -677,3 +682,302 @@ body {
 }
 
 button { -webkit-tap-highlight-color: transparent; }
+
+/* ---------- Stage: approach + large window portrait ---------- */
+
+.scene-wrap { margin: 8px 0 4px; }
+.scene { border: 0; }
+
+.stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 360 / 300;
+  max-height: 46vh;
+  border: 1px solid rgba(201, 161, 74, 0.22);
+  overflow: hidden;
+  background: #0b1113;
+}
+
+.stage-approach,
+.stage-window {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.45s ease;
+}
+
+.stage.is-approach .stage-approach,
+.stage.is-window .stage-window {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.stage-approach .scene {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+#visitor-slot {
+  transform-box: fill-box;
+  transform-origin: 30px 90px;
+  transition: transform 0.9s cubic-bezier(.22, .8, .28, 1), opacity 0.85s ease;
+}
+#visitor-slot.is-ride {
+  transition-duration: 0.75s;
+}
+#visitor-slot.is-enter {
+  transform: translate(-170px, 2px);
+  opacity: 0;
+}
+#visitor-slot.is-at-gate {
+  transform: translate(0, 0);
+  opacity: 1;
+}
+#visitor-slot.is-through {
+  transform: translate(250px, -6px);
+  opacity: 0.8;
+}
+#visitor-slot.is-leave {
+  transform: translate(-180px, 0) scaleX(-1);
+  opacity: 0;
+}
+
+.stage-window {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  background:
+    radial-gradient(ellipse at 28% 18%, rgba(243, 215, 138, 0.28), transparent 42%),
+    radial-gradient(ellipse at 80% 0%, rgba(232, 217, 176, 0.08), transparent 40%),
+    linear-gradient(180deg, #151c1e 0%, #0c1214 70%);
+}
+
+.window-glow {
+  position: absolute;
+  inset: -10% 10% 20%;
+  background: radial-gradient(ellipse at 50% 40%, rgba(240, 207, 122, 0.2), transparent 65%);
+  pointer-events: none;
+}
+
+.window-frame {
+  position: absolute;
+  inset: 8px 10px 22px;
+  border: 2px solid rgba(201, 161, 74, 0.45);
+  box-shadow:
+    inset 0 0 0 1px rgba(244, 234, 212, 0.12),
+    inset 0 -30px 40px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+}
+
+.portrait-mount {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  transform-origin: 50% 78%;
+  transition: transform 0.4s ease;
+}
+
+.portrait-mount.lean {
+  transform: scale(1.1) translateY(4%);
+}
+
+.portrait-mount > svg,
+.portrait-main svg,
+.portrait-side svg {
+  display: block;
+  width: auto;
+  height: 112%;
+  max-width: 100%;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.35));
+}
+
+.portrait-pair {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  padding: 0 4%;
+  gap: 0;
+}
+
+.portrait-main {
+  flex: 1.2;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  z-index: 1;
+}
+
+.portrait-side {
+  flex: 0.85;
+  height: 86%;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-left: -8%;
+  opacity: 0.96;
+}
+
+.portrait-side svg { height: 100%; }
+
+.window-caption,
+.scene-caption {
+  position: relative;
+  z-index: 2;
+}
+
+.window-caption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  padding: 22px 8px 6px;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: var(--paper-3);
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.8);
+  background: linear-gradient(transparent, rgba(11, 17, 19, 0.82));
+  pointer-events: none;
+}
+
+.portrait-mount { padding-bottom: 26px; box-sizing: border-box; }
+
+.sheet-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.sheet.gate-sheet {
+  overflow: hidden;
+}
+
+.sheet.gate-sheet .prose {
+  max-height: none;
+}
+
+.sheet.gate-sheet .tools,
+.sheet.gate-sheet .actions {
+  flex: 0 0 auto;
+  background: var(--paper);
+  padding-top: 8px;
+}
+
+/* tools + facts in the booth sheet */
+
+.tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 10px 0 0;
+  flex: 0 0 auto;
+}
+
+.tool {
+  min-height: 42px;
+  padding: 6px 10px;
+  border: 1px solid rgba(22, 18, 14, 0.35);
+  background: var(--paper);
+  color: var(--ink);
+  letter-spacing: 0.1em;
+  font-size: 0.86rem;
+}
+
+.tool:active { background: var(--paper-2); }
+
+.tool.used {
+  border-color: var(--ochre-dim);
+  color: var(--ochre-dim);
+  background: rgba(201, 161, 74, 0.14);
+}
+
+.facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 8px 0 0;
+}
+
+.fact {
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  padding: 3px 8px;
+  border: 1px solid rgba(60, 106, 102, 0.35);
+  color: var(--teal-deep);
+  background: rgba(60, 106, 102, 0.08);
+}
+
+.inline-roster {
+  margin: 8px 0 0;
+  padding: 8px 10px;
+  border: 1px dashed rgba(176, 58, 46, 0.35);
+  background: #f7e6d4;
+  font-size: 0.88rem;
+  line-height: 1.65;
+}
+
+.inline-roster .unit {
+  font-family: var(--serif);
+  letter-spacing: 0.08em;
+}
+
+.prose.beat,
+.sheet.soft-in {
+  animation: beatIn 0.35s ease;
+}
+
+@keyframes beatIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
+}
+
+.sheet .prose {
+  max-height: 26vh;
+}
+
+.sheet.gate-sheet .prose {
+  max-height: 18vh;
+}
+
+.arriving-note {
+  font-family: var(--serif);
+  letter-spacing: 0.16em;
+  color: var(--ochre-dim);
+  margin: 0;
+}
+
+@media (max-height: 700px) {
+  .stage { max-height: 32vh; }
+  .sheet.gate-sheet .prose { max-height: none; }
+  .scene { max-height: none; }
+}
+
+@media (max-height: 580px) {
+  .stage { max-height: 30vh; }
+  .sheet.gate-sheet .prose { max-height: 12vh; }
+  .tool { min-height: 38px; padding: 4px 8px; font-size: 0.8rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage-approach,
+  .stage-window,
+  .portrait-mount,
+  #visitor-slot,
+  #barrier-arm,
+  .prose.beat,
+  .sheet.soft-in {
+    transition: none !important;
+    animation: none !important;
+  }
+}
